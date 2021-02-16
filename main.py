@@ -72,6 +72,7 @@ def perform_transaction(drink, money):
         print("Sorry that's not enough money. Money refunded.")
         return False
 
+
 def make_coffee(drink):
     # Removes the amount of each ingredient required to make the requested drink from the machine's resources.
 
@@ -106,4 +107,3 @@ while isOn:
                 continue
         else:
             continue
-
