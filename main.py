@@ -45,13 +45,16 @@ def check_sufficient_resources(drink):
 
 def process_coins():
     # Prompts user to input the number of each coin deposited and returns total dollar amount
-    # TODO: Implement input error proofing
-
-    print("Please insert coins.")
-    total = int(input("how many quarters? ")) * .25
-    total += int(input("how many dimes? ")) * .10
-    total += int(input("how many nickels? ")) * .05
-    total += int(input("how many pennies? ")) * .01
+    total = 0
+    for coin, value in [('quarters', .25), ('dimes', .10), ('nickels', .05), ('pennies', .01)]:
+        while True:
+            try:
+                total += int(input(f"how many {coin}? ")) * value
+            except ValueError:
+                print("Please enter a number")
+                continue
+            else:
+                break
     return total
 
 
