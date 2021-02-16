@@ -33,6 +33,8 @@ resources = {
 
 
 def check_sufficient_resources(drink):
+    # Checks to make sure machine has sufficient resources to make the drink requested.
+
     for ingredient in MENU[drink]['ingredients']:
         if MENU[drink]['ingredients'][ingredient] > resources[ingredient]:
             print(f"Sorry there is not enough {ingredient}.")
@@ -42,7 +44,9 @@ def check_sufficient_resources(drink):
 
 
 def process_coins():
+    # Prompts user to input the number of each coin deposited and returns total dollar amount
     # TODO: Implement input error proofing
+
     print("Please insert coins.")
     total = int(input("how many quarters? ")) * .25
     total += int(input("how many dimes? ")) * .10
@@ -52,6 +56,9 @@ def process_coins():
 
 
 def perform_transaction(drink, money):
+    # Checks to ensure the money deposited is enough to purchase the requested drink. If user deposited too much
+    # change is calculated. The cost of the drink is then added to the machine's resources.
+
     cost = MENU[drink]['cost']
     if money >= cost:
         if money > cost:
@@ -63,25 +70,31 @@ def perform_transaction(drink, money):
         return False
 
 def make_coffee(drink):
+    # Removes the amount of each ingredient required to make the requested drink from the machine's resources.
+
     for ingredient in MENU[drink]['ingredients']:
         resources[ingredient] -= MENU[drink]['ingredients'][ingredient]
     print(f"Here is your {drink} ☕️. Enjoy!")
 
 
+# Turn the machine On
 isOn = True
 
 while isOn:
     user_input = input("What would you like? (espresso/latte/cappuccino): ")
     if user_input == 'off':
+        # Turn Machine Off
         isOn = False
         continue
     if user_input == 'report':
+        # Print machine report
         print(f"Water: {resources.get('water')}ml")
         print(f"Milk: {resources.get('milk')}ml")
         print(f"Coffee: {resources.get('coffee')}g")
         print("Money: ${:,.2f}".format(resources.get('money')))
         continue
     if user_input in ['espresso', 'latte', 'cappuccino']:
+        # Attempt drink purchase
         if check_sufficient_resources(user_input):
             deposited = process_coins()
             if perform_transaction(user_input, deposited):
